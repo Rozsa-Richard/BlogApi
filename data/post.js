@@ -1,7 +1,8 @@
 import db from "./db.js";
+db.pragma("foreign_keys=ON");
 
 db.prepare(
-  "CREATE TABLE IF NOT EXISTS posts (id INTEGER PRIMARY KEY AUTOINCREMENT, userId INTEGER, title STRING, content TEXT, FOREIGN KEY (userId) REFERENCES user(id))"
+  "CREATE TABLE IF NOT EXISTS posts (id INTEGER PRIMARY KEY AUTOINCREMENT, userId INTEGER, title TEXT, content TEXT, FOREIGN KEY (userId) REFERENCES users(id))"
 ).run();
 
 export const getPosts = () => db.prepare("SELECT * FROM posts").all();
@@ -9,7 +10,7 @@ export const getPostById = (id) =>
   db.prepare("SELECT * FROM posts WHERE id = ?").get(id);
 export const savePost = (userId, title, content) =>
   db
-    .prepare("INSERT INTO posts (userId,title,content) VALUES (?,?,?)")
+    .prepare("INSERT INTO posts (userId, title, content) VALUES (?,?,?)")
     .run(userId, title, content);
 export const updatePost = (id, userId, title, content) =>
   db

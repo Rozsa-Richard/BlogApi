@@ -5,11 +5,7 @@ db.prepare(
 ).run();
 
 export const saveUser = (name, email, password) => {
-  db.prepare("INSERT INTO users (name, email, password) VALUES (?,?,?)").run(
-    name,
-    email,
-    password
-  );
+  db.prepare("INSERT INTO users (name, email, password) VALUES (?,?,?)").run(name,email,password);
 };
 export const getUserByMail = (email) => {
   return db.prepare("SELECT * FROM users WHERE email = ?").get(email);
