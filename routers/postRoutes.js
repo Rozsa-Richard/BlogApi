@@ -1,6 +1,7 @@
 import { Router } from "express";
 import * as db from "../data/post.js";
 import { getUserByMail } from "../data/user.js";
+import jwt from "jsonwebtoken";
 
 const router = Router();
 
@@ -8,6 +9,18 @@ router.get("/", (req, res) => {
   const posts = db.getPosts();
   res.status(200).json(posts);
 });
+
+router.get("/my", (req,res)=> {
+
+});
+
+function auth(res,req, next){
+  const accessToken = req.headers.authorize;
+  if (!accessToken){
+    return res.status(401).json({message:"Unathorized"})
+  }
+  const token = jwt.verify(accessToken,'secret_key');
+}
 
 router.get("/:id", (req, res) => {
   const post = db.getPostById(+req.params.id);
