@@ -19,6 +19,7 @@ function auth(res,req, next){
   if (!accessToken){
     return res.status(401).json({message:"Unathorized"})
   }
+  
   const token = jwt.verify(accessToken,'secret_key');
 }
 
